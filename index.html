@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Health Risk Finder</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-700 via-purple-600 to-pink-500 text-white">
+
+  <div class="bg-white/10 backdrop-blur-lg border border-white/20 p-8 rounded-3xl shadow-2xl w-[90%] md:w-[70%] max-w-3xl">
+    <h1 class="text-3xl font-bold text-center mb-8">🩺 Health Risk Finder</h1>
+
+    <form id="healthForm" class="grid md:grid-cols-2 gap-6">
+      <div>
+        <label for="age">Age</label>
+        <div class="text-sm text-gray-300">BMI Categories: Underweight (BMI < 18.5), Normal weight (BMI 18.5–24.9), Overweight (BMI 25–29.9), Obesity (BMI ≥ 30)</div>
+        <input type="number" id="age" class="w-full p-2 rounded-lg text-black" title="Age" placeholder="Enter your age" required>
+      </div>
+
+      <div>
+        <label for="gender">Gender</label>
+        <select id="gender" class="w-full p-2 rounded-lg text-black" title="Gender">
+             <option value="" selected disabled hidden>-- Select your gender--</option>
+          <option value="0">Male</option>
+          <option value="1">Female</option>
+        </select>
+    </div>
+
+      <div>
+        <label for="bmi">BMI</label>
+        <div class="flex gap-2">
+          <input type="number" id="bmi" class="w-full p-2 rounded-lg text-black" title="Body Mass Index" placeholder="BMI" readonly>
+          <button type="button" onclick="openBMICalculator()" class="bg-yellow-400 hover:bg-yellow-500 text-black px-3 py-2 rounded-lg">Calculate</button>
+        </div>
+      </div>
+
+      <div>
+        <label for="systolic">Systolic BP</label>
+        <input type="number" id="systolic" class="w-full p-2 rounded-lg text-black" title="Systolic blood pressure" placeholder="e.g. 120">
+      </div>
+
+      <div>
+        <label for="diastolic">Diastolic BP</label>
+        <input type="number" id="diastolic" class="w-full p-2 rounded-lg text-black" title="Diastolic blood pressure" placeholder="e.g. 80">
+      </div>
+
+      <div>
+        <label for="chol">Cholesterol (mg/dL)</label>
+        <input type="number" id="chol" class="w-full p-2 rounded-lg text-black" title="Cholesterol in mg per dL" placeholder="e.g. 180">
+      </div>
+
+      <div>
+        <label for="diet">Diet Plan</label>
+        <select id="diet" class="w-full p-2 rounded-lg text-black" title="Diet Plan">
+          <option value="" selected disabled hidden>-- Select Diet --</option>
+          <option>Vegetarian</option>
+          <option>Non-Vegetarian</option>
+          <option>Mixed</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="activity">Physical Activity</label>
+        <select id="activity" class="w-full p-2 rounded-lg text-black" title="Physical activity">
+          <option value="" selected disabled hidden>-- Select Activity --</option>
+          <option>Yoga</option>
+          <option>Gym</option>
+          <option>Football</option>
+          <option>Cricket</option>
+          <option>Volleyball</option>
+          <option>Basketball</option>
+          <option>Meditation</option>
+          <option>Walking</option>
+          <option>Cycling</option>
+        </select>
+      </div>
+      <div>
+        <label for="stress">Stress Level</label>
+        <select id="stress" class="w-full p-2 rounded-lg text-black" title="Stress level">
+        <option value="" selected disabled hidden>-- Select Level --</option>
+        <option value="1">Low</option>
+        <option value="5">Medium</option>
+        <option value="10">High</option>
+        </select>
+    </div>
+
+
+      <div class="md:col-span-2 text-center mt-6">
+        <button type="button" onclick="checkRisk()" class="bg-green-500 hover:bg-green-600 text-white px-8 py-3 rounded-lg font-semibold">Check Health Risk</button>
+      </div>
+    </form>
+
+    <div id="result" class="text-center mt-6 text-lg font-bold"></div>
+  </div>
+
+  <script>
+    // 🧠 Load BMI value from BMI calculator page
+    window.addEventListener("load", () => {
+      const savedBMI = localStorage.getItem("user_bmi");
+      if (savedBMI) {
+        document.getElementById("bmi").value = savedBMI;
+      }
+    });
+
+    function openBMICalculator() {
+      window.location.href = "bmical.html";
+    }
+
+    function checkRisk() {
+      const bmi = parseFloat(document.getElementById("bmi").value);
+      const bp = parseFloat(document.getElementById("systolic").value);
+      const stress = parseInt(document.getElementById("stress").value);
+
+      let result = "✅ Low Health Risk";
+      if (bmi > 30 || bp > 140 || stress > 7) result = "⚠️ High Risk Detected";
+
+      document.getElementById("result").innerText = result;
+    }
+  </script>
+</body>
+</html>
